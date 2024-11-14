@@ -16,11 +16,24 @@ class MarkalarViewController: UIViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        
+        let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+        print(dataFilePath)
+        //var Yeniarkalar = [Markalar(name: "Aytaç", aciklama: "Test açıklama")]
+        //savePlist(marka: Yeniarkalar)
+        loadPlist()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(leftMarkaEklePressed))
     }
     
 
     @IBAction func markaEklePressed(_ sender: UIBarButtonItem) {
+        markaEkle()
+    }
+    
+    @objc func leftMarkaEklePressed() {
+        markaEkle()
+    }
+    
+    func markaEkle() {
         let alert = UIAlertController(title: "Marka Ekle", message: "Eklemek istediğiniz markanın adını yazınız", preferredStyle: .alert)
         alert.addTextField { textField in
             textField.placeholder = "Marka Adı"
@@ -48,6 +61,19 @@ class MarkalarViewController: UIViewController {
         }
     }
     
+    func loadPlist() {
+        let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do {
+                markalar =  try decoder.decode([Markalar].self, from: data)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+    }
+    
     
 }
 
@@ -68,7 +94,10 @@ extension MarkalarViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "detailSegue", sender: self)
+        //performSegue(withIdentifier: "detailSegue", sender: self)
+        markalar.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .left)
+        savePlist(marka: markalar)
     }
     
 }
