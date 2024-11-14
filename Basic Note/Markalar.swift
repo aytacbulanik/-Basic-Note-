@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Markalar {
+struct Markalar : Codable {
     var name : String
     var aciklama : String
 }

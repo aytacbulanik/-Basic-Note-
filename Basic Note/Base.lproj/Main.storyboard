@@ -50,11 +50,28 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="QyY-0u-Slu" id="123-qN-zyG"/>
+                        <segue destination="Myg-Ki-d4k" kind="show" identifier="detailSegue" id="ABp-5q-1CB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="910.68702290076328" y="3.5211267605633805"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="pH7-ZW-MfV">
+            <objects>
+                <viewController id="Myg-Ki-d4k" customClass="DetailViewController" customModule="Basic_Note" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="W1t-bA-2Rr">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="hSg-Kk-WBl"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Nd1-py-prf"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kFK-1f-XhB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1753" y="4"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tol-aS-kNy">
@@ -65,6 +82,8 @@
                         <rect key="frame" x="0.0" y="59" width="393" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" systemColor="systemGray2Color"/>
+                        <color key="tintColor" red="0.34419314579999999" green="0.68752783790000005" blue="0.34442984030000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="barTintColor" red="0.34419314579999999" green="0.68752783790000005" blue="0.34442984030000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <textAttributes key="largeTitleTextAttributes">
                             <fontDescription key="fontDescription" name="HoeflerText-Black" family="Hoefler Text" pointSize="35"/>
                             <color key="textColor" red="0.34419314579759763" green="0.68752783789205796" blue="0.34442984031247864" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
