@@ -101,8 +101,7 @@ extension MarkalarViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let swipe = UISwipeActionsConfiguration(actions: [])
-        let silButton = UIContextualAction(style: .normal, title: "SİL") { action, view, completion in
+        let silButton = UIContextualAction(style: .destructive, title: "SİL") { action, view, completion in
             action.backgroundColor = .blue
             view.tintColor = .blue
             self.markalar.remove(at: indexPath.row)
@@ -111,8 +110,22 @@ extension MarkalarViewController : UITableViewDelegate, UITableViewDataSource {
             completion(true)
         }
         let duzenleButton = UIContextualAction(style: .normal, title: "DÜZENLE") { action, view, completion in
-            view.backgroundColor = .green
+            let markaAdi = self.markalar[indexPath.row].name
+            let alert = UIAlertController(title: "Marka Adı Düzenle", message: nil, preferredStyle: .alert)
+            alert.addTextField { textField in
+                textField.text = markaAdi
+            }
+            let duzenleButton = UIAlertAction(title: "DÜZENLE", style: .default) { action in
+                guard let markaAdi = alert.textFields?[0].text as? String else { return }
+                let yeniMArkaAdi = markaAdi
+                self.markalar[indexPath.row].name = yeniMArkaAdi
+                self.savePlist(marka: self.markalar)
+                tableView.reloadRows(at: [indexPath], with: .left)
+            }
+            alert.addAction(duzenleButton)
+            self.present(alert, animated: true)
             completion(true)
+            
         }
         
         return UISwipeActionsConfiguration(actions: [silButton,duzenleButton])
