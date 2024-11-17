@@ -100,5 +100,23 @@ extension MarkalarViewController : UITableViewDelegate, UITableViewDataSource {
         savePlist(marka: markalar)
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let swipe = UISwipeActionsConfiguration(actions: [])
+        let silButton = UIContextualAction(style: .normal, title: "SİL") { action, view, completion in
+            action.backgroundColor = .blue
+            view.tintColor = .blue
+            self.markalar.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .left)
+            self.savePlist(marka: self.markalar)
+            completion(true)
+        }
+        let duzenleButton = UIContextualAction(style: .normal, title: "DÜZENLE") { action, view, completion in
+            view.backgroundColor = .green
+            completion(true)
+        }
+        
+        return UISwipeActionsConfiguration(actions: [silButton,duzenleButton])
+    }
+    
 }
 
