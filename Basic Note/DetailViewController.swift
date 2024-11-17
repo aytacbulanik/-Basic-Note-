@@ -8,11 +8,14 @@
 import UIKit
 
 class DetailViewController: UIViewController {
-
+    var secilenMarka : Markalar?
+    
+    @IBOutlet weak var textView: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        guard let secilenMarka = secilenMarka else { return }
+        textView.text = secilenMarka.aciklama
     }
     
 

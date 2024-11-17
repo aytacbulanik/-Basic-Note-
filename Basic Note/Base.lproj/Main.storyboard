@@ -64,10 +64,30 @@
                     <view key="view" contentMode="scaleToFill" id="W1t-bA-2Rr">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="b5b-H8-z4l">
+                                <rect key="frame" x="10" y="113" width="373" height="140"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="140" id="RPm-s1-cjd"/>
+                                </constraints>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="hSg-Kk-WBl"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="b5b-H8-z4l" firstAttribute="top" secondItem="hSg-Kk-WBl" secondAttribute="top" constant="10" id="5a5-F0-8RW"/>
+                            <constraint firstItem="b5b-H8-z4l" firstAttribute="leading" secondItem="hSg-Kk-WBl" secondAttribute="leading" constant="10" id="eWr-3h-bVr"/>
+                            <constraint firstItem="hSg-Kk-WBl" firstAttribute="trailing" secondItem="b5b-H8-z4l" secondAttribute="trailing" constant="10" id="gUf-j9-sZx"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Nd1-py-prf"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="Nd1-py-prf"/>
+                    <connections>
+                        <outlet property="textView" destination="b5b-H8-z4l" id="F54-xL-XDr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kFK-1f-XhB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -100,11 +120,17 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

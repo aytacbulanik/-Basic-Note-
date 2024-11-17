@@ -1,30 +1,31 @@
-//
-//  ViewController.swift
-//  Basic Note
-//
-//  Created by Aytaç Bulanık on 14.11.2024.
-//
+    //
+    //  ViewController.swift
+    //  Basic Note
+    //
+    //  Created by Aytaç Bulanık on 14.11.2024.
+    //
 
 import UIKit
 
 class MarkalarViewController: UIViewController {
-
+    
     
     @IBOutlet weak var tableView: UITableView!
     var markalar = [Markalar]()
+    var secilenMarka : Markalar!
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
         print(dataFilePath)
-        //var Yeniarkalar = [Markalar(name: "Aytaç", aciklama: "Test açıklama")]
-        //savePlist(marka: Yeniarkalar)
+            //var Yeniarkalar = [Markalar(name: "Aytaç", aciklama: "Test açıklama")]
+            //savePlist(marka: Yeniarkalar)
         loadPlist()
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(leftMarkaEklePressed))
     }
     
-
+    
     @IBAction func markaEklePressed(_ sender: UIBarButtonItem) {
         markaEkle()
     }
@@ -86,7 +87,7 @@ extension MarkalarViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "markaCell", for: indexPath)
         var content = cell.defaultContentConfiguration()
-
+        
         content.text = markalar[indexPath.row].name
         cell.contentConfiguration = content
         
@@ -94,10 +95,18 @@ extension MarkalarViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //performSegue(withIdentifier: "detailSegue", sender: self)
-        markalar.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .left)
-        savePlist(marka: markalar)
+        secilenMarka = markalar[indexPath.row]
+        performSegue(withIdentifier: "detailSegue", sender: secilenMarka)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "detailSegue" {
+            if let gidecekMarka = sender as? Markalar {
+                let detailVC = segue.destination as! DetailViewController
+                detailVC.secilenMarka = gidecekMarka
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
