@@ -38,7 +38,12 @@ class DetailViewController: UIViewController {
         }
         
         plistManager.savePlist(marka: yeniMArkalar)
-        
+        textView.resignFirstResponder()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        textView.becomeFirstResponder()
     }
    
 
