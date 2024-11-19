@@ -24,6 +24,8 @@ class MarkalarViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         markalar = plistManager.loadPlist()
+        tableView.reloadData()
+
     }
     
     

@@ -15,8 +15,10 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         yeniMArkalar = plistManager.loadPlist()
         guard let secilenMarka = secilenMarka else { return }
+        title = secilenMarka.name
         textView.text = secilenMarka.aciklama
     }
     
@@ -29,7 +31,12 @@ class DetailViewController: UIViewController {
                 markaSira = index
             }
         }
-        yeniMArkalar[markaSira].aciklama = markaAciklama
+        if markaAciklama == "" {
+            yeniMArkalar.remove(at: markaSira)
+        }else {
+            yeniMArkalar[markaSira].aciklama = markaAciklama
+        }
+        
         plistManager.savePlist(marka: yeniMArkalar)
         
     }
