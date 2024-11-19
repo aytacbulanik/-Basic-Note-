@@ -18,10 +18,12 @@ class MarkalarViewController: UIViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
-        print(dataFilePath)
         markalar = plistManager.loadPlist()
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(leftMarkaEklePressed))
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        markalar = plistManager.loadPlist()
     }
     
     
