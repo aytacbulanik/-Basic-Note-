@@ -13,15 +13,14 @@ class MarkalarViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var markalar = [Markalar]()
     var secilenMarka : Markalar!
+    var plistManager = PlistManager()
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
         print(dataFilePath)
-            //var Yeniarkalar = [Markalar(name: "Aytaç", aciklama: "Test açıklama")]
-            //savePlist(marka: Yeniarkalar)
-        loadPlist()
+        markalar = plistManager.loadPlist()
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(leftMarkaEklePressed))
     }
     
@@ -43,36 +42,11 @@ class MarkalarViewController: UIViewController {
             guard let textfield = alert.textFields?[0].text else { return }
             let marka = Markalar(name: textfield,aciklama: "Girilmedi")
             self.markalar.append(marka)
-            self.savePlist(marka: self.markalar)
+            self.plistManager.savePlist(marka: self.markalar)
             self.tableView.reloadData()
         }
         alert.addAction(ekleButton)
         present(alert, animated: true)
-    }
-    
-    func savePlist(marka : [Markalar]) {
-        let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
-        let encoder = PropertyListEncoder()
-        do {
-            let data = try encoder.encode(marka)
-            try data.write(to: dataFilePath!)
-            print("yazma başarılı")
-        }catch {
-            print(error.localizedDescription)
-        }
-    }
-    
-    func loadPlist() {
-        let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
-            do {
-                markalar =  try decoder.decode([Markalar].self, from: data)
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-        
     }
     
     
@@ -97,7 +71,6 @@ extension MarkalarViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         secilenMarka = markalar[indexPath.row]
         performSegue(withIdentifier: "detailSegue", sender: secilenMarka)
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -115,7 +88,7 @@ extension MarkalarViewController : UITableViewDelegate, UITableViewDataSource {
             view.tintColor = .blue
             self.markalar.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .left)
-            self.savePlist(marka: self.markalar)
+            self.plistManager.savePlist(marka: self.markalar)
             completion(true)
         }
         let duzenleButton = UIContextualAction(style: .normal, title: "DÜZENLE") { action, view, completion in
@@ -128,7 +101,7 @@ extension MarkalarViewController : UITableViewDelegate, UITableViewDataSource {
                 guard let markaAdi = alert.textFields?[0].text as? String else { return }
                 let yeniMArkaAdi = markaAdi
                 self.markalar[indexPath.row].name = yeniMArkaAdi
-                self.savePlist(marka: self.markalar)
+                self.plistManager.savePlist(marka: self.markalar)
                 tableView.reloadRows(at: [indexPath], with: .left)
             }
             alert.addAction(duzenleButton)
